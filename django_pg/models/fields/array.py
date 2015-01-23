@@ -126,6 +126,10 @@ class ArrayField(models.Field):
     def get_prep_lookup(self, lookup_type, value):
         # Handling for `__len`, which is a custom lookup type
         # for arrays, must be properly handled.
+        if lookup_type == 'isnull' and not value:
+            value = []
+            lookup_type = 'exact'
+
         if lookup_type == 'len':
             try:
                 return int(value)
