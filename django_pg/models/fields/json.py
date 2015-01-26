@@ -36,6 +36,12 @@ class JSONField(models.Field):
         super(JSONField, self).__init__(*args, null=null, blank=blank,
                                         default=default, **kwargs)
 
+    def deconstruct(self):
+        name, path, args, kwargs = super(JSONField, self).deconstruct()
+        if self._type is not None:
+            kwargs['type'] = self._type
+        return name, path, args, kwargs
+
     def db_type(self, connection):
         return 'json' if get_version(connection) >= 90200 else 'text'
 
