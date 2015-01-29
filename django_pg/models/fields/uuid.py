@@ -56,6 +56,7 @@ class UUIDField(Field):
         name, path, args, kwargs = super(UUIDField, self).deconstruct()
         kwargs['auto_add'] = self._auto_add
         kwargs['coerce_to'] = self._coerce_to
+        kwargs['unique'] = self._unique
         return name, path, args, kwargs
 
     def db_type(self, connection):
